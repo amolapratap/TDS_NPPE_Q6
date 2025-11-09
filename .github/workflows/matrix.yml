@@ -1,0 +1,27 @@
+name: Matrix Build (a58082f)
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [14, 16, 18]   # 3 variants
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: matrix-a58082f
+        run: echo "Building for Node version ${{ matrix.version }}"
+
+      - name: Generate build artifact
+        run: echo "Build output for version ${{ matrix.version }}" > output.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-a58082f-v${{ matrix.version }}
+          path: output.txt
